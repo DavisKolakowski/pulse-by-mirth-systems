@@ -1,75 +1,42 @@
-using Pulse.API.Authorization;
-using Pulse.API.Middlewares;
-using Pulse.API.Requirement;
-using Pulse.API.Services;
+using Pulse.Core.Extensions;
 using dotenv.net;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.ConfigureAppConfiguration((configBuilder) =>
-{
-    configBuilder.Sources.Clear();
-    DotEnv.Load();
-    configBuilder.AddEnvironmentVariables();
-});
+// Load environment variables
+DotEnv.Load();
 
+// Configure Kestrel
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.AddServerHeader = false;
 });
 
 // Add services to the container.
-builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddPulseByMirthSystems();
+builder.Services.AddPulseByMirthSystemsAuthentication(builder.Configuration);
+builder.Services.AddPulseByMirthSystemsAuthorization();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    var clientOriginUrl = builder.Configuration.GetValue<string>("CLIENT_ORIGIN_URL");
+    if (!string.IsNullOrEmpty(clientOriginUrl))
     {
-        policy.WithOrigins(
-            builder.Configuration.GetValue<string>("CLIENT_ORIGIN_URL"))
-            .WithHeaders(new string[] {
-                HeaderNames.ContentType,
-                HeaderNames.Authorization,
-            })
-            .WithMethods("GET")
-            .SetPreflightMaxAge(TimeSpan.FromSeconds(86400));
-    });
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.WithOrigins(clientOriginUrl)
+                .WithHeaders(new string[] {
+                    HeaderNames.ContentType,
+                    HeaderNames.Authorization,
+                })
+                .WithMethods("GET")
+                .SetPreflightMaxAge(TimeSpan.FromSeconds(86400));
+        });
+    }
 });
 
 builder.Services.AddControllers();
-
-builder.Host.ConfigureServices(services =>
-{
-    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            var audience =
-                  builder.Configuration.GetValue<string>("AUTH0_AUDIENCE");
-
-            options.Authority =
-                  $"https://{builder.Configuration.GetValue<string>("AUTH0_DOMAIN")}/";
-            options.Audience = audience;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true
-            };
-        });
-
-    services.AddAuthorization(options =>
-    {
-        options.AddPolicy("read:admin-messages", policy =>
-        {
-            policy.Requirements.Add(new RBACRequirement("read:admin-messages"));
-        });
-    });
-
-    services.AddSingleton<IAuthorizationHandler, RBACHandler>();
-});
 
 var app = builder.Build();
 
@@ -94,8 +61,7 @@ foreach (var key in requiredVars)
 app.Urls.Add(
     $"http://+:{app.Configuration.GetValue<string>("PORT")}");
 
-app.UseErrorHandler();
-app.UseSecureHeaders();
+app.UsePulseByMirthSystems();
 app.MapControllers();
 app.UseCors();
 

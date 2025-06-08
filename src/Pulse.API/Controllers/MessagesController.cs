@@ -1,5 +1,5 @@
-using Pulse.API.Models;
-using Pulse.API.Services;
+using Pulse.Core.Models;
+using Pulse.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
