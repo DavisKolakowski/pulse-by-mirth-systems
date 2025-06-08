@@ -7,9 +7,9 @@
       "applicationUrl": "http://localhost:12814",
       "sslPort": 44366
     }
-  },
+  },  
   "profiles": {
-    "api_csharp_aspnet_hello_world": {
+    "Pulse API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
