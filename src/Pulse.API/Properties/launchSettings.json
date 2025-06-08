@@ -8,13 +8,12 @@
       "sslPort": 44366
     }
   },  
-  "profiles": {
-    "Pulse API": {
+  "profiles": {    "Pulse API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
-      "launchUrl": "http://localhost:4040/",
-      "applicationUrl": "http://localhost:4040/",
+      "launchUrl": "http://localhost:6060/",
+      "applicationUrl": "http://localhost:6060/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -1,8 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React from "react";
 import { PageLoader } from "./components/page-loader";
 import { AuthenticationGuard } from "./components/authentication-guard";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import { AdminPage } from "./pages/admin-page";
 import { CallbackPage } from "./pages/callback-page";
 import { HomePage } from "./pages/home-page";
@@ -10,8 +9,9 @@ import { NotFoundPage } from "./pages/not-found-page";
 import { ProfilePage } from "./pages/profile-page";
 import { ProtectedPage } from "./pages/protected-page";
 import { PublicPage } from "./pages/public-page";
+import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
 
-export const App: React.FC = () => {
+const AppRoutes = () => {
   const { isLoading } = useAuth0();
 
   if (isLoading) {
@@ -21,6 +21,7 @@ export const App: React.FC = () => {
       </div>
     );
   }
+  
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
@@ -40,5 +41,13 @@ export const App: React.FC = () => {
       <Route path="/callback" element={<CallbackPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+  );
+};
+
+export const App = () => {
+  return (
+    <Auth0ProviderWithNavigate>
+      <AppRoutes />
+    </Auth0ProviderWithNavigate>
   );
 };

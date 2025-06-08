@@ -10,9 +10,13 @@
     <IsAspireHost>true</IsAspireHost>
     <UserSecretsId>6283a1ac-8e0e-46db-999c-28dfc975a4c3</UserSecretsId>
   </PropertyGroup>
-
+    <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.0" />
+    <PackageReference Include="Aspire.Hosting.NodeJs" Version="9.3.0" />
+  </ItemGroup>
+  
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+    <ProjectReference Include="..\..\Pulse.API\Pulse.API.csproj" />
   </ItemGroup>
 
 </Project>

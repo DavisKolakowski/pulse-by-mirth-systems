@@ -1,13 +1,15 @@
 using Pulse.Core.Extensions;
-using dotenv.net;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load environment variables
-DotEnv.Load();
+builder.Host.ConfigureAppConfiguration((configBuilder) =>
+{
+    configBuilder.Sources.Clear();
+    DotNetEnv.Env.Load();
+    configBuilder.AddEnvironmentVariables();
+});
 
-// Configure Kestrel
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.AddServerHeader = false;
