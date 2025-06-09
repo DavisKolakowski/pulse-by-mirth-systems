@@ -3,13 +3,6 @@ using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.ConfigureAppConfiguration((configBuilder) =>
-{
-    configBuilder.Sources.Clear();
-    DotNetEnv.Env.Load();
-    configBuilder.AddEnvironmentVariables();
-});
-
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.AddServerHeader = false;
@@ -60,8 +53,7 @@ foreach (var key in requiredVars)
     }
 }
 
-app.Urls.Add(
-    $"http://+:{app.Configuration.GetValue<string>("PORT")}");
+app.Urls.Add($"http://+:{app.Configuration.GetValue<string>("PORT")}");
 
 app.UsePulseByMirthSystemsMiddleware();
 app.MapControllers();
