@@ -13,7 +13,7 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     /// <param name="app">The application builder</param>
     /// <returns>The application builder for chaining</returns>
-    public static IApplicationBuilder UsePulseByMirthSystems(this IApplicationBuilder app)
+    public static IApplicationBuilder UsePulseByMirthSystemsMiddleware(this IApplicationBuilder app)
     {
         app.UseErrorHandler();
         app.UseSecureHeaders();

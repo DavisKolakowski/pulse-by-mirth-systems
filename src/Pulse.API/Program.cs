@@ -63,7 +63,7 @@ foreach (var key in requiredVars)
 app.Urls.Add(
     $"http://+:{app.Configuration.GetValue<string>("PORT")}");
 
-app.UsePulseByMirthSystems();
+app.UsePulseByMirthSystemsMiddleware();
 app.MapControllers();
 app.UseCors();
 
