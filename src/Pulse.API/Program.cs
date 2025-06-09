@@ -1,7 +1,11 @@
 using Pulse.Core.Extensions;
+using Pulse.Core.Data;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Aspire service defaults
+builder.AddServiceDefaults();
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
@@ -12,6 +16,9 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 builder.Services.AddPulseByMirthSystems();
 builder.Services.AddPulseByMirthSystemsAuthentication(builder.Configuration);
 builder.Services.AddPulseByMirthSystemsAuthorization();
+
+// Add database
+builder.AddNpgsqlDbContext<ApplicationDbContext>("pulsedb");
 
 builder.Services.AddCors(options =>
 {

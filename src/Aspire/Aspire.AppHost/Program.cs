@@ -1,7 +1,13 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+// Add PostgreSQL database
+var postgres = builder.AddPostgres("postgres")
+    .WithPgAdmin()
+    .AddDatabase("pulsedb");
+
 // Add the API project - using port 6060 as per .env.example
 var apiService = builder.AddProject("pulse-api", @"..\..\Pulse.API\Pulse.API.csproj")
+    .WithReference(postgres)
     .WithHttpEndpoint(port: 6060, name: "api-endpoint")
     .WithEnvironment("CLIENT_ORIGIN_URL", "http://localhost:4040");
 

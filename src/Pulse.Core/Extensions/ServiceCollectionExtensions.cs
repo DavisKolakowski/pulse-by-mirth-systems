@@ -28,9 +28,8 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
-    
-    /// <summary>
-    /// Adds Pulse Core authorization policies
+      /// <summary>
+    /// Adds Pulse Core authorization policies with automatic permission-to-policy mapping
     /// </summary>
     /// <param name="services">The service collection</param>
     /// <returns>The service collection for chaining</returns>
@@ -38,11 +37,21 @@ public static class ServiceCollectionExtensions
     {
         services.AddAuthorization(options =>
         {
+            // Configure dynamic policy creation for permissions
+            // This allows any permission to be used as a policy name automatically
+            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                
+            // Fallback policy for backwards compatibility
             options.AddPolicy("read:admin-messages", policy =>
             {
                 policy.Requirements.Add(new RBACRequirement("read:admin-messages"));
             });
         });
+
+        // Register a policy provider that creates permission-based policies on demand
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         
         return services;
     }
