@@ -16,6 +16,9 @@ var auth0Domain = builder.AddParameter("auth0-domain");
 var auth0ClientId = builder.AddParameter("auth0-client-id", secret: true);
 var auth0Audience = builder.AddParameter("auth0-audience");
 
+// Add Azure maps parameters
+var azureMapsSubscriptionKey = builder.AddParameter("azure-maps-subscription-key", secret: true);
+
 // Add the database migration service - runs before API starts
 var migrationService = builder.AddProject<Pulse_Services_DatabaseMigrations>("pulse-migrations")
     .WithReference(pulseDb)
