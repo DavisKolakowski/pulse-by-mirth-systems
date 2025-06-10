@@ -24,16 +24,16 @@ var migrationService = builder.AddProject<Pulse_Services_DatabaseMigrations>("pu
 // Add the API project - using port 6060 as per .env.example
 var apiService = builder.AddProject<Pulse_API>("pulse-api")
     .WithReference(pulseDb)
-    .WithHttpEndpoint(port: 6060, name: "api-endpoint")
+    .WithUrl("http://localhost:6060/")
     .WithEnvironment("CLIENT_ORIGIN_URL", "http://localhost:4040")
     .WithEnvironment("AUTH0_DOMAIN", auth0Domain)
     .WithEnvironment("AUTH0_AUDIENCE", auth0Audience)
     .WaitFor(migrationService); // Wait for migrations to complete
 
 // Add the React SPA client - using port 4040 to match Auth0 configuration
-var webClient = builder.AddNpmApp("pulse-web-client", @"..\Pulse.Clients.Web")
+var webClient = builder.AddNpmApp("pulse-web-client", @"..\..\Pulse.Clients.Web", "dev")
     .WithReference(apiService)
-    .WithHttpEndpoint(port: 4040, env: "PORT")
+    .WithEnvironment("PORT", "4040")
     .WithEnvironment("VITE_API_SERVER_URL", "http://localhost:6060")
     .WithEnvironment("VITE_AUTH0_DOMAIN", auth0Domain)
     .WithEnvironment("VITE_AUTH0_CLIENT_ID", auth0ClientId)
