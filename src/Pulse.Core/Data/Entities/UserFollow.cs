@@ -1,4 +1,5 @@
 using NodaTime;
+using Pulse.Core.Data.Enums;
 
 namespace Pulse.Core.Data.Entities;
 
@@ -35,13 +36,4 @@ public class UserFollow
     public Tag? Tag { get; set; }
     public Venue? Venue { get; set; }
     #endregion
-}
-
-/// <summary>
-/// Enumeration of follow types
-/// </summary>
-public enum FollowType
-{
-    Tag = 1,
-    Venue = 2
 }

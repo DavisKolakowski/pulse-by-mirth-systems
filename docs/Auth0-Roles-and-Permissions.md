@@ -1,7 +1,39 @@
-# Pulse Auth0 Roles and Permissions Documentation
+# Pulse Authentication and Authorization Documentation
 
 ## Overview
-This document provides a comprehensive reference for all Auth0 roles and permissions used in the Pulse application. The system uses a combination of custom Pulse API permissions and Auth0 Management API permissions to provide granular access control.
+This document provides a comprehensive reference for the hybrid authentication and authorization system used in the Pulse application. The system combines Auth0 for authentication and permission management with a provider-agnostic database design for venue-specific access control.
+
+## Hybrid Authorization Architecture
+
+Pulse implements a **hybrid approach** that combines the best of both worlds:
+
+### 🔐 **Auth0 Integration**
+- **Authentication**: Secure user authentication with JWT tokens
+- **Global Permissions**: Centralized permission management via Auth0 dashboard
+- **Auto-Policy Creation**: Auth0 permissions automatically become authorization policies
+- **Token-Based**: All permissions included in JWT access tokens
+
+### 🗄️ **Database-Driven Role Management**  
+- **Provider-Agnostic Design**: Users identified by `ProviderId` (works with Auth0, Azure AD, etc.)
+- **Venue-Specific Roles**: Fine-grained access control via `VenueRole` entity
+- **Relationship Mapping**: Direct user-to-venue assignments in the database
+- **Flexible Architecture**: Easy to extend for multiple auth providers
+
+### ⚡ **Simple Controller Usage**
+```csharp
+// Auto-created policy from Auth0 permission
+[Authorize(Policy = "read:venues")]
+public async Task<IActionResult> GetVenues() { }
+
+// Venue-specific access controlled by database roles
+[Authorize(Policy = "write:specials")]
+public async Task<IActionResult> CreateSpecial(int venueId) 
+{
+    // Additional venue-level authorization via RBACHandler
+}
+```
+
+The system uses a combination of Auth0 permissions for global access control and database entities for venue-specific role management to provide comprehensive, scalable authorization.
 
 ## Important Note: Public vs. Authenticated Access
 The Pulse platform prioritizes public accessibility for venue discovery. Most core functionality is available without authentication to encourage user adoption and provide immediate value.

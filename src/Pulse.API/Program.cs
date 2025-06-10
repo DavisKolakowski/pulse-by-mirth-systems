@@ -1,6 +1,7 @@
 using Pulse.Core.Extensions;
 using Pulse.Core.Data;
 using Microsoft.Net.Http.Headers;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,15 @@ builder.Services.AddPulseByMirthSystemsAuthentication(builder.Configuration);
 builder.Services.AddPulseByMirthSystemsAuthorization();
 
 // Add database
-builder.AddNpgsqlDbContext<ApplicationDbContext>("pulsedb");
+builder.AddNpgsqlDbContext<ApplicationDbContext>("pulsedb", configureDbContextOptions: options =>
+{
+    options.UseNpgsql(npgsqlOptions =>
+    {
+        npgsqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+        npgsqlOptions.UseNodaTime();
+        npgsqlOptions.UseNetTopologySuite();
+    });
+});
 
 builder.Services.AddCors(options =>
 {

@@ -8,11 +8,14 @@ namespace Pulse.Core.Data.Configurations;
 /// Entity configuration for Media entity
 /// </summary>
 public class MediaConfiguration : IEntityTypeConfiguration<Media>
-{
-    public void Configure(EntityTypeBuilder<Media> builder)
+{    public void Configure(EntityTypeBuilder<Media> builder)
     {
         #region Entity Configuration
-        builder.ToTable("media");
+        builder.ToTable("media", t =>
+        {
+            t.HasCheckConstraint("CK_Media_Association",
+                "(venue_id IS NOT NULL AND post_id IS NULL) OR (venue_id IS NULL AND post_id IS NOT NULL)");
+        });
         builder.HasKey(m => m.Id);
 
         builder.Property(m => m.FileName)
@@ -41,20 +44,13 @@ public class MediaConfiguration : IEntityTypeConfiguration<Media>
                .WithMany(v => v.MediaFiles)
                .HasForeignKey(m => m.VenueId)
                .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasOne(m => m.Post)
                .WithMany(p => p.MediaAttachments)
                .HasForeignKey(m => m.PostId)
                .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasIndex(m => m.VenueId);
         builder.HasIndex(m => m.PostId);
         builder.HasIndex(m => m.MediaType);
         builder.HasIndex(m => m.CreatedAt);
-
-        // Ensure media is associated with either a venue or a post, but not both
-        builder.HasCheckConstraint("CK_Media_Association", 
-            "(venue_id IS NOT NULL AND post_id IS NULL) OR (venue_id IS NULL AND post_id IS NOT NULL)");
         #endregion
     }
 }

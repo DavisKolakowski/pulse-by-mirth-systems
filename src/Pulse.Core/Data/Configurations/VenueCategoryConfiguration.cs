@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pulse.Core.Data.Entities;
-
 namespace Pulse.Core.Data.Configurations;
-
 /// <summary>
 /// Entity configuration for VenueCategory entity
 /// </summary>
@@ -14,25 +12,19 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
         #region Entity Configuration
         builder.ToTable("venue_categories");
         builder.HasKey(vc => vc.Id);
-
         builder.Property(vc => vc.Name)
                .IsRequired()
                .HasMaxLength(50);
-
         builder.Property(vc => vc.Description)
                .HasMaxLength(200);
-               
         builder.Property(vc => vc.Icon)
                .HasMaxLength(10);
-
         builder.HasMany(vc => vc.Venues)
                .WithOne(v => v.Category)
                .HasForeignKey(v => v.CategoryId)
                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(vc => vc.Name)
-               .IsUnique();
-        builder.HasIndex(vc => vc.BitMask)
                .IsUnique();
         #endregion
 
@@ -45,7 +37,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Dining establishments offering food and beverages", 
                 Icon = "🍽️",
                 SortOrder = 1,
-                BitMask = 1
             },
             new VenueCategory 
             { 
@@ -54,7 +45,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Venues focused on drinks and nightlife", 
                 Icon = "🍸",
                 SortOrder = 2,
-                BitMask = 2
             },
             new VenueCategory 
             { 
@@ -63,7 +53,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Casual spots for coffee and light meals", 
                 Icon = "☕",
                 SortOrder = 3,
-                BitMask = 4
             },
             new VenueCategory 
             { 
@@ -72,7 +61,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Venues for dancing and late-night entertainment", 
                 Icon = "🪩",
                 SortOrder = 4,
-                BitMask = 8
             },
             new VenueCategory 
             { 
@@ -81,7 +69,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Casual venues with food, drinks, and often live music", 
                 Icon = "🍺",
                 SortOrder = 5,
-                BitMask = 16
             },
             new VenueCategory 
             { 
@@ -90,7 +77,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Venues producing wine, offering tastings, food pairings, and live music", 
                 Icon = "🍷",
                 SortOrder = 6,
-                BitMask = 32
             },
             new VenueCategory 
             { 
@@ -99,7 +85,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Venues brewing their own beer, often with food and live music", 
                 Icon = "🍻",
                 SortOrder = 7,
-                BitMask = 64
             },
             new VenueCategory 
             { 
@@ -108,7 +93,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Sophisticated venues with cocktails, small plates, and live music", 
                 Icon = "🛋️",
                 SortOrder = 8,
-                BitMask = 128
             },
             new VenueCategory 
             { 
@@ -117,7 +101,6 @@ public class VenueCategoryConfiguration : IEntityTypeConfiguration<VenueCategory
                 Description = "Intimate dining venues with quality food, wine, and occasional live music", 
                 Icon = "🥂",
                 SortOrder = 9,
-                BitMask = 256
             }
         );
         #endregion

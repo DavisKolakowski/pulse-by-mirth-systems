@@ -24,11 +24,10 @@ public class SpecialCategoryConfiguration : IEntityTypeConfiguration<SpecialCate
 
         builder.Property(sc => sc.Icon)
                .HasMaxLength(10);
-
         builder.HasIndex(sc => sc.Name)
-            .IsUnique();
+               .IsUnique();
         #endregion
-
+        
         #region Data Seed
         builder.HasData(
             new SpecialCategory
@@ -37,7 +36,6 @@ public class SpecialCategoryConfiguration : IEntityTypeConfiguration<SpecialCate
                 Name = "Food",
                 Description = "Food specials, appetizers, and meal deals",
                 Icon = "🍔",
-                BitMask = 1,
                 SortOrder = 1,
             },
             new SpecialCategory
@@ -46,7 +44,6 @@ public class SpecialCategoryConfiguration : IEntityTypeConfiguration<SpecialCate
                 Name = "Drink",
                 Description = "Drink specials, happy hours, and beverage promotions",
                 Icon = "🍺",
-                BitMask = 2,
                 SortOrder = 2,
             },
             new SpecialCategory
@@ -55,7 +52,6 @@ public class SpecialCategoryConfiguration : IEntityTypeConfiguration<SpecialCate
                 Name = "Entertainment",
                 Description = "Live music, DJs, trivia, karaoke, and other events",
                 Icon = "🎵",
-                BitMask = 4,
                 SortOrder = 3,
             }
         );

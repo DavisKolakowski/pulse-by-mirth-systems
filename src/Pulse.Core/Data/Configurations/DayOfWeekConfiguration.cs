@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pulse.Core.Data.Entities;
+using DayOfWeek = Pulse.Core.Data.Entities.DayOfWeek;
 
 namespace Pulse.Core.Data.Configurations;
 
@@ -22,22 +23,17 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
         builder.Property(d => d.ShortName)
                .IsRequired()
                .HasMaxLength(3);
-
         builder.HasIndex(d => d.IsoNumber)
-            .IsUnique();
-        builder.HasIndex(d => d.BitMask)
-            .IsUnique();
+               .IsUnique();
         #endregion
 
         #region Data Seed
-        builder.HasData(
-            new DayOfWeek
+        builder.HasData(new DayOfWeek
             {
                 Id = 1,
                 Name = "Sunday",
                 ShortName = "SUN",
                 IsoNumber = 0,
-                BitMask = 1,
                 IsWeekday = false,
                 SortOrder = 1
             },
@@ -47,7 +43,6 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
                 Name = "Monday",
                 ShortName = "MON",
                 IsoNumber = 1,
-                BitMask = 2,
                 IsWeekday = true,
                 SortOrder = 2
             },
@@ -57,7 +52,6 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
                 Name = "Tuesday",
                 ShortName = "TUE",
                 IsoNumber = 2,
-                BitMask = 4,
                 IsWeekday = true,
                 SortOrder = 3
             },
@@ -67,7 +61,6 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
                 Name = "Wednesday",
                 ShortName = "WED",
                 IsoNumber = 3,
-                BitMask = 8,
                 IsWeekday = true,
                 SortOrder = 4
             },
@@ -77,7 +70,6 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
                 Name = "Thursday",
                 ShortName = "THU",
                 IsoNumber = 4,
-                BitMask = 16,
                 IsWeekday = true,
                 SortOrder = 5
             },
@@ -87,7 +79,6 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
                 Name = "Friday",
                 ShortName = "FRI",
                 IsoNumber = 5,
-                BitMask = 32,
                 IsWeekday = true,
                 SortOrder = 6
             },
@@ -97,7 +88,6 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<DayOfWeek>
                 Name = "Saturday",
                 ShortName = "SAT",
                 IsoNumber = 6,
-                BitMask = 64,
                 IsWeekday = false,
                 SortOrder = 7
             }

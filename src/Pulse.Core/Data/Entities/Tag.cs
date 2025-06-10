@@ -1,3 +1,5 @@
+using NodaTime;
+
 namespace Pulse.Core.Data.Entities;
 
 /// <summary>
@@ -14,9 +16,17 @@ public class Tag
     #region Metadata properties
     public string? Color { get; set; }
     public string? Icon { get; set; }
-    public bool IsSystemTag { get; set; } = false;
     public bool IsActive { get; set; } = true;
     public int UsageCount { get; set; } = 0;
+    #endregion
+
+    #region Audit information
+    public Instant CreatedAt { get; set; }
+    public required string CreatedByUserId { get; set; }
+    public Instant? UpdatedAt { get; set; }
+    public string? UpdatedByUserId { get; set; }
+    public Instant? DeactivatedAt { get; set; }
+    public string? DeactivatedByUserId { get; set; }
     #endregion
 
     #region Navigation properties

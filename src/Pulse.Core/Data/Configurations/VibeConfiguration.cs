@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NodaTime;
 using Pulse.Core.Data.Entities;
 
 namespace Pulse.Core.Data.Configurations;
@@ -21,12 +22,21 @@ public class VibeConfiguration : IEntityTypeConfiguration<Vibe>
 
         builder.Property(v => v.Description)
                .HasMaxLength(200);
-
         builder.Property(v => v.Color)
                .HasMaxLength(7); // #FFFFFF format
 
         builder.Property(v => v.Icon)
                .HasMaxLength(10);
+
+        builder.Property(v => v.CreatedByUserId)
+               .IsRequired()
+               .HasMaxLength(255);
+
+        builder.Property(v => v.UpdatedByUserId)
+               .HasMaxLength(255);
+
+        builder.Property(v => v.DeactivatedByUserId)
+               .HasMaxLength(255);
 
         builder.HasIndex(v => v.Name)
                .IsUnique();
@@ -36,17 +46,17 @@ public class VibeConfiguration : IEntityTypeConfiguration<Vibe>
         #endregion
 
         #region Data Seed
-        builder.HasData(
-            new Vibe
+        builder.HasData(new Vibe
             {
                 Id = 1,
                 Name = "busy",
                 Description = "High energy, crowded atmosphere",
                 Color = "#FF6B35",
                 Icon = "🔥",
-                IsSystemVibe = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Vibe
             {
@@ -55,9 +65,10 @@ public class VibeConfiguration : IEntityTypeConfiguration<Vibe>
                 Description = "Relaxed, laid-back atmosphere",
                 Color = "#4ECDC4",
                 Icon = "😌",
-                IsSystemVibe = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Vibe
             {
@@ -66,9 +77,10 @@ public class VibeConfiguration : IEntityTypeConfiguration<Vibe>
                 Description = "Fun and energetic atmosphere",
                 Color = "#45B7D1",
                 Icon = "🎉",
-                IsSystemVibe = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Vibe
             {
@@ -77,9 +89,10 @@ public class VibeConfiguration : IEntityTypeConfiguration<Vibe>
                 Description = "Peaceful and calm atmosphere",
                 Color = "#A8E6CF",
                 Icon = "🤫",
-                IsSystemVibe = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Vibe
             {
@@ -88,9 +101,10 @@ public class VibeConfiguration : IEntityTypeConfiguration<Vibe>
                 Description = "Perfect for couples and intimate conversations",
                 Color = "#FFB6C1",
                 Icon = "💕",
-                IsSystemVibe = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             }
         );
         #endregion

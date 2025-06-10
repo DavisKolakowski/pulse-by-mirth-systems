@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NodaTime;
 using Pulse.Core.Data.Entities;
 
 namespace Pulse.Core.Data.Configurations;
@@ -21,12 +22,21 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
 
         builder.Property(t => t.Description)
                .HasMaxLength(200);
-
         builder.Property(t => t.Color)
                .HasMaxLength(7); // #FFFFFF format
 
         builder.Property(t => t.Icon)
                .HasMaxLength(10);
+
+        builder.Property(t => t.CreatedByUserId)
+               .IsRequired()
+               .HasMaxLength(255);
+
+        builder.Property(t => t.UpdatedByUserId)
+               .HasMaxLength(255);
+
+        builder.Property(t => t.DeactivatedByUserId)
+               .HasMaxLength(255);
 
         builder.HasIndex(t => t.Name)
                .IsUnique();
@@ -44,9 +54,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                 Description = "Happy hour drink specials",
                 Color = "#FF6B35",
                 Icon = "🍻",
-                IsSystemTag = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Tag
             {
@@ -55,9 +66,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                 Description = "Live music performances",
                 Color = "#4ECDC4",
                 Icon = "🎵",
-                IsSystemTag = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Tag
             {
@@ -66,9 +78,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                 Description = "Trivia nights and quiz events",
                 Color = "#45B7D1",
                 Icon = "🧠",
-                IsSystemTag = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Tag
             {
@@ -77,9 +90,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                 Description = "Karaoke nights",
                 Color = "#FFA07A",
                 Icon = "🎤",
-                IsSystemTag = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             },
             new Tag
             {
@@ -88,9 +102,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                 Description = "Food discounts and meal deals",
                 Color = "#98D8C8",
                 Icon = "🍽️",
-                IsSystemTag = true,
                 IsActive = true,
-                UsageCount = 0
+                UsageCount = 0,
+                CreatedAt = NodaConstants.UnixEpoch,
+                CreatedByUserId = "system-seed"
             }
         );
         #endregion

@@ -1,4 +1,5 @@
 using NodaTime;
+using Pulse.Core.Data.Enums;
 
 namespace Pulse.Core.Data.Entities;
 
@@ -40,13 +41,4 @@ public class Media
     public Venue? Venue { get; set; }
     public Post? Post { get; set; }
     #endregion
-}
-
-/// <summary>
-/// Enumeration of media types
-/// </summary>
-public enum MediaType
-{
-    Photo = 1,
-    Video = 2
 }

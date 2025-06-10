@@ -1,4 +1,5 @@
 using NodaTime;
+using Pulse.Core.Data.Enums;
 
 namespace Pulse.Core.Data.Entities;
 
@@ -41,17 +42,4 @@ public class Notification
     public Special? RelatedSpecial { get; set; }
     public Tag? RelatedTag { get; set; }
     #endregion
-}
-
-/// <summary>
-/// Enumeration of notification types
-/// </summary>
-public enum NotificationType
-{
-    NewSpecial = 1,
-    SpecialReminder = 2,
-    VenueActivity = 3,
-    TagActivity = 4,
-    SystemAlert = 5,
-    Welcome = 6
 }

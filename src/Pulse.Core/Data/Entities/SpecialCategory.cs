@@ -10,10 +10,9 @@ public class SpecialCategory
     public required string Name { get; set; }
     public string? Description { get; set; }
     #endregion
-
+    
     #region Metadata properties
     public string? Icon { get; set; }
-    public int BitMask { get; set; }
     public int SortOrder { get; set; }
     #endregion
 

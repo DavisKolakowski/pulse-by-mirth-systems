@@ -14,10 +14,8 @@ public class VenueRoleConfiguration : IEntityTypeConfiguration<VenueRole>
         #region Entity Configuration
         builder.ToTable("venue_roles");
         builder.HasKey(vr => vr.Id);
-
-        builder.Property(vr => vr.RoleName)
-               .IsRequired()
-               .HasMaxLength(50);
+        builder.Property(vr => vr.RoleId)
+               .IsRequired();
 
         builder.HasOne(vr => vr.User)
                .WithMany(u => u.VenueRoles)
@@ -29,6 +27,11 @@ public class VenueRoleConfiguration : IEntityTypeConfiguration<VenueRole>
                .HasForeignKey(vr => vr.VenueId)
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasOne(vr => vr.Role)
+               .WithMany(r => r.VenueRoles)
+               .HasForeignKey(vr => vr.RoleId)
+               .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasOne(vr => vr.AssignedBy)
                .WithMany()
                .HasForeignKey(vr => vr.AssignedByUserId)
@@ -38,12 +41,11 @@ public class VenueRoleConfiguration : IEntityTypeConfiguration<VenueRole>
                .WithMany()
                .HasForeignKey(vr => vr.DeactivatedByUserId)
                .OnDelete(DeleteBehavior.SetNull);
-
-        builder.HasIndex(vr => new { vr.UserId, vr.VenueId, vr.RoleName })
+        builder.HasIndex(vr => new { vr.UserId, vr.VenueId, vr.RoleId })
                .IsUnique()
                .HasFilter("is_active = true");
 
-        builder.HasIndex(vr => new { vr.VenueId, vr.RoleName })
+        builder.HasIndex(vr => new { vr.VenueId, vr.RoleId })
                .HasFilter("is_active = true");
         #endregion
     }

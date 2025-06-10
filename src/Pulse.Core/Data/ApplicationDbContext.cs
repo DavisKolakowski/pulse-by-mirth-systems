@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pulse.Core.Data.Entities;
+using Pulse.Core.Data.Enums;
+using DayOfWeekEntity = Pulse.Core.Data.Entities.DayOfWeek;
 
 namespace Pulse.Core.Data;
 
@@ -10,6 +12,10 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
 {
     #region Core Entities
     public DbSet<User> Users => Set<User>();
+    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<UserRole> UserRoles => Set<UserRole>();
     public DbSet<VenueRole> VenueRoles => Set<VenueRole>();
     #endregion
 
@@ -17,7 +23,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Venue> Venues => Set<Venue>();
     public DbSet<VenueCategory> VenueCategories => Set<VenueCategory>();
     public DbSet<BusinessHours> BusinessHours => Set<BusinessHours>();
-    public DbSet<DayOfWeek> DayOfWeeks => Set<DayOfWeek>();
+    public DbSet<DayOfWeekEntity> DayOfWeeks => Set<DayOfWeekEntity>();
     #endregion
 
     #region Special Entities
@@ -54,6 +60,12 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         modelBuilder.HasPostgresExtension("postgis_sfcgal");
         modelBuilder.HasPostgresExtension("postgis_tiger_geocoder");
         modelBuilder.HasPostgresExtension("postgis_topology");
+        #endregion
+
+        #region PostgreSQL Enums
+        modelBuilder.HasPostgresEnum<MediaType>();
+        modelBuilder.HasPostgresEnum<NotificationType>();
+        modelBuilder.HasPostgresEnum<FollowType>();
         #endregion
 
         #region Apply Configurations
