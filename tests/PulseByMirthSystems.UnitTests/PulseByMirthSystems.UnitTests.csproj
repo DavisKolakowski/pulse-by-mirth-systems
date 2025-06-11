@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Pulse.API\Pulse.API.csproj" />
-    <ProjectReference Include="..\..\Pulse.Core\Pulse.Core.csproj" />
-    <ProjectReference Include="..\..\Pulse.Services.DatabaseMigrations\Pulse.Services.DatabaseMigrations.csproj" />
+    <ProjectReference Include="..\..\src\PulseByMirthSystems\PulseByMirthSystems.csproj" />
   </ItemGroup>
 
   <ItemGroup>
