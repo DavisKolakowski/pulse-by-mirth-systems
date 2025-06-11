@@ -5,16 +5,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Maps.Common" Version="1.0.0-beta.4" />
     <PackageReference Include="Azure.Maps.Geolocation" Version="1.0.0-beta.3" />
     <PackageReference Include="Azure.Maps.Rendering" Version="2.0.0-beta.1" />
     <PackageReference Include="Azure.Maps.Routing" Version="1.0.0-beta.4" />
     <PackageReference Include="Azure.Maps.Search" Version="2.0.0-beta.5" />
-    <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+    <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />    <PackageReference Include="FluentValidation" Version="11.11.0" />    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="NodaTime" Version="3.2.0" />
     <PackageReference Include="NodaTime.Serialization.SystemTextJson" Version="1.3.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.FuzzyStringMatch" Version="5.0.10" />
@@ -25,6 +28,45 @@
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
     <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.19" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\Common\Behaviors\" />
+    <Folder Include="Application\Common\Interfaces\" />
+    <Folder Include="Application\Common\Mappings\" />
+    <Folder Include="Application\Features\ActivityThreads\" />
+    <Folder Include="Application\Features\Notifications\" />
+    <Folder Include="Application\Features\Posts\" />
+    <Folder Include="Application\Features\Specials\" />
+    <Folder Include="Application\Features\Users\" />
+    <Folder Include="Application\Features\Venues\" />
+    <Folder Include="Application\Services\" />
+    <Folder Include="Domain\Constants\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Domain\Enums\" />
+    <Folder Include="Domain\Events\" />
+    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Domain\ValueObjects\" />
+    <Folder Include="Infrastructure\Authorization\Handlers\" />
+    <Folder Include="Infrastructure\Authorization\Requirements\" />
+    <Folder Include="Infrastructure\Authorization\Services\" />
+    <Folder Include="Infrastructure\Common\Interfaces\" />
+    <Folder Include="Infrastructure\Data\Configurations\" />
+    <Folder Include="Infrastructure\Data\Interceptors\" />
+    <Folder Include="Infrastructure\Data\Migrations\" />
+    <Folder Include="Infrastructure\Data\Repositories\" />
+    <Folder Include="Infrastructure\Identity\Models\" />
+    <Folder Include="Infrastructure\Identity\Services\" />
+    <Folder Include="Infrastructure\Identity\Stores\" />
+    <Folder Include="Infrastructure\Logging\" />
+    <Folder Include="Infrastructure\Services\AzureMaps\" />
+    <Folder Include="Infrastructure\Services\FileStorage\" />
+    <Folder Include="Infrastructure\Services\Notifications\" />
+    <Folder Include="Presentation\Controllers\" />
+    <Folder Include="Presentation\Filters\" />
+    <Folder Include="Presentation\Hubs\" />
+    <Folder Include="Presentation\Middlewares\" />
+    <Folder Include="Presentation\Models\" />
   </ItemGroup>
 
 </Project>
